@@ -9,3 +9,4 @@ Estas corresponden a Regiones, Comunas y Candidatos correspondiente a selecciona
 
 
 ![Form](https://github.com/robirod/Formulario_Desis/assets/138181188/517955c0-6c46-4430-b7c7-894a513b7b78)
+![Captura de pantalla 2024-05-13 a la(s) 13 48 33](https://github.com/robirod/Formulario_Desis/assets/138181188/f315370c-e6a8-4c38-8f49-94573c25d679)
