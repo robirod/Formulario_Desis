@@ -1,0 +1,107 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    padding: 0;
+   
+    
+}
+
+body{
+    min-height: 100vh;
+    padding: 10px;
+    
+}
+.container{
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    padding: 30px;
+    margin: 0 15px;
+   
+    border: solid black;
+}
+form label{
+    margin-top: 8px;
+    
+}
+
+.container form{
+
+    width: 60%;
+    padding: 10px ;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    min-height: 400px;
+    border-top:1px solid black ;
+    border-left:1px solid black ;
+    
+    
+    
+}
+
+form .entradas{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+
+}
+
+.entradas input{
+    width:50%;
+    border-radius:5px;
+
+}
+
+form input[type=text] , input[type=email]{
+    background-color: rgb(234, 242, 249);
+    border: 2px solid;
+    border-radius:5px;
+    border-color: rgb(242, 248, 250);
+}
+
+
+.entradas select{
+    width:50%;
+}
+
+form .checks{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn{
+    margin:10vh;
+    height:10vh;
+    font-size: large;
+    color:rgb(255, 255, 255);
+    font-weight: bold;
+    background-color:#0059ff;
+    border-color: #0059ff;
+    border-radius:5px;
+    height:10vh;
+    
+}
+
+.btn:hover{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+
+.error{
+    
+    background-color: #ff3333;
+    border-color: #ff3333;
+    /*transition : 0.5s;*/
+}
+
+.success {
+    background-color: rgb(1, 184, 1);
+    border-color: rgb(1, 184, 1);
+    transition: 0.5s;
+}
