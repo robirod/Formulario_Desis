@@ -20,7 +20,7 @@
                 <form method="POST" id="formulario">
                     <div class="entradas">
                         <label for="">Nombre y Apellido</label>
-                        <input id="nombre_apel" type="text" placeholder="Ingresar Nombre y Apellido" required> 
+                        <input id="nombre_apel" type="text" placeholder="Ingresar Nombre y Apellido"  minlength="3" required> 
                     </div>
                     <div class="entradas">
                         <label for="">Alias</label>

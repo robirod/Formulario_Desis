@@ -1,6 +1,4 @@
 
-console.log("Heeeyy!");
-
 let form_votacion = {
     id_votacion: 0,
     nombre_apel: $('#nombre_apel'),
@@ -16,8 +14,6 @@ $(function () {
     $(document).ready(function () {
         getRegiones();
         limpiarForm();
-       
-
     });
     
     $(form_votacion.rut).on('input', function(){
@@ -40,11 +36,6 @@ $(function () {
         form_votacion.candidato.find('option[value="0"]').remove();
     })
 
-    $('.fuente').on('change', function () {
-        var valorFuente = $('input[name="fuente"]:checked').val();
-        // console.log(valorFuente);
-    });
-
 
     $('.btn').on('click', function () {
         $('#formulario').submit(function (event) {
@@ -55,7 +46,6 @@ $(function () {
             sendForm();
 
         } else {
-            //  console.log("llenar todos los datos");
             $('.btn').addClass('error').text('Faltan datos para registrar su voto');
 
             setInterval(() => {
@@ -132,9 +122,6 @@ function getCandidatos() {
     form_votacion.candidato.empty();
 }
 
-
-
-
 function sendForm() {
     $.ajax({
         url: 'back.php',
@@ -162,7 +149,6 @@ function sendForm() {
             console.log("Sin Respuesta formulario");
         }
     });
-
 
     limpiarForm();
     getRegiones();

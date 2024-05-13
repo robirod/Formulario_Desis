@@ -5,8 +5,6 @@ if ($conexionBD->connect_errno) {
     echo "Fallo al conectar a MySQL: (" . $conexionBD->connect_errno . ") " . $conexionBD->connect_error;
 }
 
-
-
 // SELECT REGIONES
 
 function getRegiones()
@@ -117,15 +115,7 @@ function insertForm($nombre_apel, $alias, $rut, $email, $id_region, $id_comuna, 
     }else{
         echo json_encode("Sin exito");
     }
-
-
-
-   /* if (mysqli_query($conexionBD, $insertsql)){
-       
-    } else {
-        echo json_encode("Sin exito");
-    }*/
-
+    $conexionBD->close();
 }
 
 
