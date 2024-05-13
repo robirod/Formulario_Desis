@@ -28,7 +28,7 @@
                     </div>
                     <div class="entradas">
                         <label for="">RUT </label>
-                        <input id="rut" type="text" placeholder="Ingresar Rut" required>
+                        <input id="rut" type="text" placeholder="Ingresar Rut" maxlength="12"required>
                     </div>
                     <div class="entradas">
                         <label for="">e-Mail</label>

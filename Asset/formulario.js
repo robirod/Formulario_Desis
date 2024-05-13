@@ -16,8 +16,13 @@ $(function () {
     $(document).ready(function () {
         getRegiones();
         limpiarForm();
+       
 
     });
+    
+    $(form_votacion.rut).on('input', function(){
+        formatoRut();
+    })
 
     $(form_votacion.region).on('change', function () {
         form_votacion.region.find('option[value="0"]').remove();
@@ -60,11 +65,6 @@ $(function () {
 
         }
     });
-
-
-
-
-
 
 });
 
@@ -178,4 +178,10 @@ function limpiarForm() {
     form_votacion.candidato.html('<option value="0">Seleccione Candidato</option>');
     $('input[name="fuente"]:checked').prop('checked', false);
 
+}
+
+function formatoRut(){
+    var rut = form_votacion.rut.val().replace(/[^0-9kK]/g, '');
+    rut = rut.replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4');
+    form_votacion.rut.val(rut);
 }

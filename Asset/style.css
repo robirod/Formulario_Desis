@@ -36,9 +36,7 @@ form label{
     min-height: 400px;
     border-top:1px solid black ;
     border-left:1px solid black ;
-    
-    
-    
+
 }
 
 form .entradas{
@@ -62,10 +60,17 @@ form input[type=text] , input[type=email]{
     border-color: rgb(242, 248, 250);
 }
 
-
-.entradas select{
-    width:50%;
+form select{
+    width: 50%;
+    border-radius: 5px;
+    background-color: #e6e6e6;
+    border: 1px solid;
+    border-color: #e6e6e6;
+    
 }
+
+
+
 
 form .checks{
     display: flex;
