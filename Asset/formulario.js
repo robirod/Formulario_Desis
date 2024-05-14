@@ -1,4 +1,3 @@
-
 let form_votacion = {
     id_votacion: 0,
     nombre_apel: $('#nombre_apel'),
@@ -15,11 +14,42 @@ $(function () {
         getRegiones();
         limpiarForm();
     });
-    
-    $(form_votacion.rut).on('input', function(){
-        formatoRut();
+
+    //VALIDACIÓN EMAIL
+    $(form_votacion.email).on('input', function () {
+        var correo = form_votacion.email.val();
+        if (validarCorreo(correo)) {
+            form_votacion.email.css('background-color', '#68daa2');
+        } else {
+            form_votacion.email.css('background-color', '#f58282');
+        }
+
+        if (form_votacion.email.val() == '') {
+
+            form_votacion.email.css('background-color', 'rgb(234, 242, 249');
+
+        }
+    });
+
+    //VALIDACIÓN RUT
+    $(form_votacion.rut).on('input', function () {
+        var rut = $(this).val();
+        if (formatoRut(rut)) {
+            // console.log('rut valido');
+            form_votacion.rut.css('background-color', '#68daa2');
+        } else {
+            //console.log('rut invalido');
+            form_votacion.rut.css('background-color', '#f58282');
+        }
+
+        if (form_votacion.rut.val() == '') {
+            form_votacion.rut.css('background-color', 'rgb(234, 242, 249');
+        }
+
     })
 
+
+    //SELECCIÓN REGIÓN - COMUNA - CANDIDATO
     $(form_votacion.region).on('change', function () {
         form_votacion.region.find('option[value="0"]').remove();
         getComunas();
@@ -37,14 +67,41 @@ $(function () {
     })
 
 
+    // ENVIO DE FORMULARIO
     $('.btn').on('click', function () {
         $('#formulario').submit(function (event) {
             event.preventDefault();
         });
 
         if (form_votacion.nombre_apel.val() !== '' && form_votacion.rut.val() !== '' && form_votacion.email.val() !== '' && form_votacion.region.val() !== '0' && form_votacion.comuna.val() !== '0' && form_votacion.candidato.val() !== '0' && $('input[name="fuente"]:checked').val() !== undefined) {
-            sendForm();
+            var correo = form_votacion.email.val();
+            var rut = form_votacion.rut.val();
+            //VALIDACION CORREO PREVIO ENVIO  FORMULARIO
+            if (validarCorreo(correo)) {
+                //VALIDACION RUT PREVIO ENVIO FORMULARIO
+                if (formatoRut(rut)) {
+                    sendForm();
+                } else {
+                    //ELSE VALIDADOR RUT
+                    $('.btn').addClass('error').text('Favor de ingresar RUT valido');
 
+                    setInterval(() => {
+                        $('.btn').removeClass('error').text('Votar');
+
+                    }, 3000);
+                }
+
+                //ELSE VALIDAOR EMAIL
+            } else {
+                $('.btn').addClass('error').text('Favor de ingresar email valido');
+
+                setInterval(() => {
+                    $('.btn').removeClass('error').text('Votar');
+
+                }, 3000);
+            }
+
+            //ELSE VALIDADOR GENERAL
         } else {
             $('.btn').addClass('error').text('Faltan datos para registrar su voto');
 
@@ -52,11 +109,12 @@ $(function () {
                 $('.btn').removeClass('error').text('Votar');
 
             }, 3000);
-
         }
     });
-
 });
+
+
+//FUNCIONES 
 
 function getRegiones() {
     $.ajax({
@@ -123,6 +181,13 @@ function getCandidatos() {
 }
 
 function sendForm() {
+
+    var fuentesSelect = [];
+    $('.fuente:checked').each(function () {
+        fuentesSelect.push($(this).val());
+    });
+
+
     $.ajax({
         url: 'back.php',
         method: 'POST',
@@ -134,12 +199,12 @@ function sendForm() {
             'id_region': form_votacion.region.val(),
             'id_comuna': form_votacion.comuna.val(),
             'id_candidato': form_votacion.candidato.val(),
-            'fuente': $('input[name="fuente"]:checked').val(),
+            'fuente': fuentesSelect,
             action: 'insertForm'
         },
         success: function (result) {
             console.log(result);
-            $('.btn').addClass('success').text(result.replace(`"Registro de voto exitoso"` ,`Registro de voto exitoso`));
+            $('.btn').addClass('success').text(result.replace(`"Registro de voto exitoso"`, `Registro de voto exitoso`));
             setInterval(() => {
                 $('.btn').removeClass('success').text('Votar');
 
@@ -154,6 +219,8 @@ function sendForm() {
     getRegiones();
 }
 
+
+
 function limpiarForm() {
     form_votacion.nombre_apel.val('');
     form_votacion.alias.val('');
@@ -163,11 +230,71 @@ function limpiarForm() {
     form_votacion.comuna.html('<option value="0">Seleccione Comuna</option>');
     form_votacion.candidato.html('<option value="0">Seleccione Candidato</option>');
     $('input[name="fuente"]:checked').prop('checked', false);
+    form_votacion.email.css('background-color', 'rgb(234, 242, 249');
+    form_votacion.rut.css('background-color', 'rgb(234, 242, 249');
+
 
 }
 
-function formatoRut(){
-    var rut = form_votacion.rut.val().replace(/[^0-9kK]/g, '');
-    rut = rut.replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4');
+function formatoRut(rut) {
+    //FORMATEAR RUT (XXXXXXXX-X / XXXXXXX-X)
+    rut = form_votacion.rut.val().replace(/[^0-9kK]/g, '');
+    rut = rut.replace(/^(\d{2})(\d{5,6})(\w{1})$/, '$1$2-$3');
     form_votacion.rut.val(rut);
+
+
+    var splitRut = rut.split('-');
+    if (splitRut.length !== 2) {
+        return false; // FORMATO RUT INCORRECTO
+    }
+
+    var numRut = splitRut[0];
+    var verificador = splitRut[1];
+
+    // VALIDACIÓN DIGITO VERIFICADOR
+    var suma = 0;
+    var multiplo = 2;
+
+    for (var i = numRut.length - 1; i >= 0; i--) {
+        suma += parseInt(numRut.charAt(i)) * multiplo;
+        if (multiplo < 7) {
+            multiplo++;
+        } else {
+            multiplo = 2;
+        }
+    }
+
+    var resto = suma % 11;
+    var dv = 11 - resto;
+
+    if (dv === 10) {
+        if (verificador.toUpperCase() !== 'K') {
+            return false; //DIGITO VERIFICADOR INCORRECTO
+        }
+    } else if (dv === 11) {
+        if (verificador !== '0') {
+            return false; // DIGITO VERIFICADOR INCORRECTO
+        }
+    } else {
+        if (dv !== parseInt(verificador)) {
+            return false; // DIGITO VERIFICADOR INCORRECTO
+        }
+    }
+
+    return true; // RUT VALIDO
+
 }
+
+function validarCorreo(correo) {
+
+    var regex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+    if (regex.test(correo)) {
+        //console.log("El correo es válido");
+        return true;
+    } else {
+        //console.log('el correo es invalido');
+        return false;
+    }
+
+}
+

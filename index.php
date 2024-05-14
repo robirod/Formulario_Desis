@@ -28,10 +28,10 @@
                     </div>
                     <div class="entradas">
                         <label for="">RUT </label>
-                        <input id="rut" type="text" placeholder="Ingresar Rut" maxlength="12"required>
+                        <input id="rut" type="text" placeholder="Ingresar Rut" maxlength="10"required>
                     </div>
                     <div class="entradas">
-                        <label for="">e-Mail</label>
+                        <label for="">e-Mail</label>                        
                         <input id="email" type="email" required placeholder="Ingresar Correo">
                     </div>
 
@@ -60,13 +60,13 @@
                         <label for="">Como se entero de nosotros</label>
 
                         <label for="">
-                            <input type="radio" class="fuente" value="Web" name="fuente"> Web</label>
+                            <input type="checkbox" class="fuente" value="Web" name="fuente"> Web</label>
                         <label for="">
-                            <input type="radio" class="fuente" value="TV" name="fuente"> TV</label>
+                            <input type="checkbox" class="fuente" value="TV" name="fuente"> TV</label>
                         <label for="">
-                            <input type="radio" class="fuente" value="Redes_sociales" name="fuente"> Redes Sociales</label>
+                            <input type="checkbox" class="fuente" value="Redes_sociales" name="fuente"> Redes Sociales</label>
                         <label for="">
-                            <input type="radio" class="fuente" value="Amigo" name="fuente"> Amigo</label>
+                            <input type="checkbox" class="fuente" value="Amigo" name="fuente"> Amigo</label>
                     </div>
                     <button class="btn">Votar</button>
                 </form>

@@ -142,6 +142,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'insertForm') {
     $id_region = $_POST['id_region'];
     $id_comuna = $_POST['id_comuna'];
     $id_candidato = $_POST['id_candidato'];
-    $fuente = $_POST['fuente'];
+    $array_fuentes =$_POST['fuente'];
+    $fuente = implode(' / ' , $array_fuentes);
     insertForm($nombre_apel, $alias, $rut, $email, $id_region, $id_comuna, $id_candidato, $fuente);
 } 
